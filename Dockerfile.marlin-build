@@ -1,0 +1,35 @@
+FROM ubuntu:20.04 AS configs
+
+RUN apt update && \
+    apt install -y curl unzip
+
+# copy relevant configs to /config
+RUN curl -LO https://github.com/MarlinFirmware/Configurations/archive/release-2.0.7.2.zip && \
+    unzip release-2.0.7.2.zip && \
+    mv "Configurations-release-2.0.7.2/config/examples/Creality/Ender-3 Pro/BigTreeTech SKR Mini E3 2.0" "/config"
+
+FROM ubuntu:20.04
+
+RUN apt update && \
+    apt install -y git curl python3 python3-pip make vim && \
+    ln -s /usr/bin/python3 /usr/bin/python
+
+# install arduino-cli
+RUN curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | BINDIR=/usr/bin sh
+
+# install platform io
+RUN curl -fsSL https://raw.githubusercontent.com/platformio/platformio-core-installer/master/get-platformio.py -o get-platformio.py && \
+    python3 get-platformio.py && \
+    rm -f /get-platformio.py
+
+RUN mkdir /marlin && \
+    cd /marlin && \
+    curl -LO https://raw.githubusercontent.com/MarlinFirmware/Marlin/2.0.x/platformio.ini && \
+    mkdir -p /marlin/Marlin/src/HAL/STM32F1 && \
+    cd /marlin/Marlin/src/HAL/STM32F1 && \
+    curl -LO https://raw.githubusercontent.com/MarlinFirmware/Marlin/2.0.x/Marlin/src/HAL/STM32F1/build_flags.py && \
+    cd /marlin && \
+    /root/.platformio/penv/bin/platformio run -e STM32F103RC_btt
+
+# pull configs from configs build image
+COPY --from=configs /config /config
