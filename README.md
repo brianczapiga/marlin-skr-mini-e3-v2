@@ -20,7 +20,11 @@ make clone
 make default-config
 ```
 
-This will setup marlin in the current directory and pull in the default configuration.
+This will:
+
+- build the docker image (containing the arduino-cli and platformio)
+- clone the marlin source in the current directory
+- pull in the default configuration from BTT.
 
 # enable bl touch
 
@@ -30,9 +34,15 @@ You can enable bl touch by running the following:
 make enable-bltouch
 ```
 
-Please note, follow the link in references for the auto bed leveling guide.
+Follow the link in references for the auto bed leveling guide.
 
 You must follow the `Measure NOZZLE_TO_PROBE_OFFSET` section.
+
+# further notes
+
+The master branch is cloned by default, you may wish to checkout a different branch (bug fix for instance)
+
+The source and config are only pulled during setup (above, when using the respective Makefile targets.)
 
 # building the firmware
 
