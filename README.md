@@ -1,6 +1,10 @@
 # marlin build
 
-This is specifically for the SKR Mini V2.0.
+This is specifically for the SKR Mini E3 V2.0.
+
+Once the Docker image is built, subsequent compiles should be relatively quick.
+
+Please note that by default the `.gitignore` will cause git to ignore the `marlin` (source) directory. This may be significant if you fork this repository and expect to track changes made to your own configuration.
 
 # requirements
 
@@ -29,7 +33,6 @@ make enable-bltouch
 Please note, follow the link in references for the auto bed leveling guide.
 
 You must follow the `Measure NOZZLE_TO_PROBE_OFFSET` section.
-
 
 # building the firmware
 
