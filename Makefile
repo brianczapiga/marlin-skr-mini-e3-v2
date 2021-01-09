@@ -18,6 +18,8 @@ enable-bltouch:
 	docker run -it --rm -v`pwd`/marlin:/marlin marlin-build sed -i '/XY_PROBE_SPEED/s/.*/\#define XY_PROBE_SPEED \(100*60\)/' /marlin/Marlin/Configuration.h
 	docker run -it --rm -v`pwd`/marlin:/marlin marlin-build sed -i '/BLTOUCH_SET_5V_MODE/s/\/\///' /marlin/Marlin/Configuration_adv.h
 	docker run -it --rm -v`pwd`/marlin:/marlin marlin-build sed -i '/BLTOUCH_DELAY/s/.*/\#define BLTOUCH_DELAY 500/' /marlin/Marlin/Configuration.h
+	@echo consider modifying Configuration.h for Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN and AUTO_BED_LEVELING_BILINEAR
+	@echo also you must set NOZZLE_TO_PROBE_OFFSET
 
 interact:
 	docker run -it --rm -v`pwd`/marlin:/marlin marlin-build /bin/bash

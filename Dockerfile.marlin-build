@@ -31,5 +31,11 @@ RUN mkdir /marlin && \
     cd /marlin && \
     /root/.platformio/penv/bin/platformio run -e STM32F103RC_btt
 
+# ensure platform io is updated
+RUN cd /marlin && \
+    /root/.platformio/penv/bin/platformio upgrade && \
+    /root/.platformio/penv/bin/platformio platform update
+
 # pull configs from configs build image
 COPY --from=configs /config /config
+
