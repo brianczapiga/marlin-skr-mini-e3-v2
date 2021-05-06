@@ -25,4 +25,6 @@ interact:
 	docker run -it --rm -v`pwd`/marlin:/marlin marlin-build /bin/bash
 
 build:
+	@rm -f marlin/.pio/build/STM32F103RC_btt/firmware.*
 	docker run -it --rm -v`pwd`/marlin:/marlin marlin-build sh -c '(cd /marlin;/root/.platformio/penv/bin/platformio run)'
+	cp marlin/.pio/build/STM32F103RC_btt/firmware.bin .
